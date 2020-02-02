@@ -67,8 +67,8 @@ val click : Page.Link.t -> t -> result Lwt.t
 
 (** The following functions send a raw post request to the specified URI *)
 
-val post : string -> string -> t -> result Lwt.t
-val post_uri : Uri.t -> string -> t -> result Lwt.t
+val post : ?chunked:bool -> string -> string -> t -> result Lwt.t
+val post_uri : ?chunked:bool -> Uri.t -> string -> t -> result Lwt.t
 
 (** Submit a filled form *)
 val submit : Page.Form.t -> t -> result Lwt.t

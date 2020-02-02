@@ -107,14 +107,14 @@ and get uri_string agent =
 
 let click link = link |> Page.Link.uri |> get_uri
 
-let post_uri uri content agent =
+let post_uri ?chunked:(chunked=false) uri content agent =
   let headers = agent.cookie_jar
     |> Cookiejar.add_to_headers uri agent.client_headers in
-  Client.post ~headers:headers ~body:(Cohttp_lwt.Body.of_string content) uri
+  Client.post ~headers:headers ~body:(Cohttp_lwt.Body.of_string content) ~chunked:chunked uri
   >>= update_agent uri agent
 
-let post uri_string content agent =
-  post_uri (Uri.of_string uri_string) content agent
+let post ?chunked:(chunked=false) uri_string content agent =
+  post_uri ~chunked:chunked (Uri.of_string uri_string) content agent
 
 let submit form agent =
   let uri = Page.Form.uri form in
